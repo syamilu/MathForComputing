@@ -10,29 +10,32 @@ import java.util.Scanner;
  * @author user
  */
 public class Assignment3 {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-       
-        Scanner input = new Scanner(System.in);
+       Scanner input = new Scanner(System.in);
+        int[] tree;
+        String[] array;
+        String node;
+        int len, count = 0;
         
-        /* Command line arguments method:
-        int[] tree = new int[args.length];
-        int arrLen = tree.length;*/
+        System.out.print("Enter input : ");
+        node = input.nextLine();
+        len = node.length();
+        array = new String[len];
         
-        // User input based:
-        System.out.print("Enter number of input: ");
-        int arrLen = input.nextInt();
-        String[] array = new String[arrLen];
-        int[] tree = new int[arrLen];
+        for(int i = 0; i < len; i++){
+            if(node.charAt(i)==' '){
+                count++;
+            }
+            else if(array[count]==null){
+                array[count] = String.valueOf(node.charAt(i));
+            }
+            else{
+                array[count] = array[count] + node.charAt(i);
+            }
+        }
         
-        //Prompting input in String type to accept "-" input
-        System.out.print("Input tree nodes: ");
-        for(int i = 0; i < arrLen; i++)
-            array[i] = input.next();
-        
+        int arrLen = count+1;
+        tree = new int[arrLen];
         //Conversion elements' data type from String to int.
         for(int i = 0; i < arrLen; i++)
         {
@@ -41,7 +44,6 @@ public class Assignment3 {
             else
             tree[i] = Integer.parseInt(array[i]);
         }
-        
         //Display root.
         System.out.println("Root: " + tree[0]);
         
