@@ -57,10 +57,10 @@ public class Assignment3 {
         System.out.println("Number of Leaves: " + countLeaves(tree, arrLen, getHeight(arrLen)));
         
         //Checks whether tree is complete or not. NOT YET FINISHED!!
-        System.out.println("Complete binary tree: ??");
+        System.out.println("Complete binary tree: " + isTreComplete(tree));
         
         //Checks whether tree is full or not. NOT YET FINISHED!!
-        System.out.println("Full binary tree: ??");
+        System.out.println("Full binary tree: " + isTreeFull(tree));
         
         //Display pre-order traversal by invoking preOrder() method.
         System.out.print("Pre-order: ");
@@ -168,4 +168,60 @@ public class Assignment3 {
         }
         return leaves;
         }
+    
+    public static boolean isTreeFull(int[] tree){
+             
+        boolean result = false;
+        
+        if(tree[3] != 0 && tree[4] != 0)
+        {
+            if(tree[5] == 0 && tree[6] == 0)
+            {
+                result = true;
+            }
+            else if(tree[5] != 0 && tree[6] != 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+        }
+        else if(tree[3] == 0 && tree[4] == 0 )
+        {
+            if(tree[5] != 0 && tree[6] != 0)
+            {
+                result = true;
+            }
+            else if(tree[5] == 0 || tree[6] == 0)
+            {
+               result = false;
+            }
+        }
+        else if(tree[3] == 0 || tree[4] == 0)
+        {
+            result = false;
+        }
+            
+        return result;
+    }
+    
+    public static boolean isTreeComplete(int[] tree){
+        
+        boolean result = false;
+        if(tree[3] != 0 && tree[4] != 0)
+        {
+            if(tree[5] != 0 && tree[6] != 0 )
+            {
+                result =  true;
+            }
+        }
+        else
+        {
+            result = false;
+        }           
+        
+        return result;
+    }
 }
