@@ -57,7 +57,7 @@ public class Assignment3 {
         System.out.println("Number of Leaves: " + countLeaves(tree, arrLen, getHeight(arrLen)));
         
         //Checks whether tree is complete or not. NOT YET FINISHED!!
-        System.out.println("Complete binary tree: " + isTreComplete(tree));
+        System.out.println("Complete binary tree: " + isTreeComplete(tree));
         
         //Checks whether tree is full or not. NOT YET FINISHED!!
         System.out.println("Full binary tree: " + isTreeFull(tree));
