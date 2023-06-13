@@ -48,6 +48,10 @@ public class Assignment3_gitHub {
         }
         
         //Display root.
+        if(tree[0] == 0 || tree[1]==0&&tree[2]==0){
+            System.out.println("Not a binary tree. Terminating the system");
+            System.exit(0);
+        }
         System.out.println("Root: " + tree[0]);
         
         //Display height.
