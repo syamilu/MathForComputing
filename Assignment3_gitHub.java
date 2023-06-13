@@ -41,8 +41,15 @@ public class Assignment3_gitHub {
         //Conversion elements' data type from String to int.
         for(int i = 0; i < arrLen; i++)
         {
-            if("-".equals(array[i]))
+            if("-".equals(array[i])){
                 tree[i] = 0;
+                if(array[2*i+1]!=null&&2*i+1<arrLen){
+                    array[2*i+1]="0";
+                }
+                if(array[2*i+2]!=null&&2*i+2<arrLen){
+                    array[2*i+2]="0";
+                }
+            }
             else
             tree[i] = Integer.parseInt(array[i]);
         }
