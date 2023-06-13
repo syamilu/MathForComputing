@@ -16,6 +16,7 @@ public class Assignment3 {
         String[] array;
         String node;
         int len, count = 0;
+        String complete, full;
         
         System.out.print("Enter input : ");
         node = input.nextLine();
@@ -39,28 +40,50 @@ public class Assignment3 {
         //Conversion elements' data type from String to int.
         for(int i = 0; i < arrLen; i++)
         {
-            if("-".equals(array[i]))
+            if("-".equals(array[i])){
                 tree[i] = 0;
+                if(array[2*i+1]!=null&&2*i+1<arrLen){
+                    array[2*i+1]=null;
+                }
+                if(array[2*i+2]!=null&&2*i+2<arrLen){
+                    array[2*i+2]=null;
+                }
+            }
+            else if(array[i]==null){
+                if(2*i+1<arrLen&&array[2*i+1]!=null){
+                    array[2*i+1]=null;
+                }
+                if(2*i+2<arrLen&&array[2*i+2]!=null){
+                    array[2*i+2]=null;
+                }
+                continue;
+            }
             else
             tree[i] = Integer.parseInt(array[i]);
         }
         //Display root.
+        if(tree[0] == 0 || tree[1]==0&&tree[2]==0){
+            System.out.println("Not a binary tree. Terminating the system");
+            System.exit(0);
+        }
         System.out.println("Root: " + tree[0]);
         
         //Display height.
-        System.out.println("Height: " + getHeight(arrLen));
+        System.out.println("Height: " + getHeight(tree.length, tree));
         
         //Display nodes.
         System.out.println("Number of Nodes: " + countNodes(tree));
         
         //Display leaves.
-        System.out.println("Number of Leaves: " + countLeaves(tree, arrLen, getHeight(arrLen)));
+        System.out.println("Number of Leaves: " + countLeaves(tree, arrLen, getHeight(arrLen, tree)));
         
-        //Checks whether tree is complete or not. NOT YET FINISHED!!
-        System.out.println("Complete binary tree: ??");
+        //Checks whether tree is complete or not.
+        complete = isCompleteTree(tree)? "Yes":"No";
+        System.out.println("Complete binary tree: " + complete);
         
-        //Checks whether tree is full or not. NOT YET FINISHED!!
-        System.out.println("Full binary tree: ??");
+        //Checks whether tree is full or not.
+        full = isFullTree(tree)? "Yes":"No";
+        System.out.println("Full binary tree: " + full);
         
         //Display pre-order traversal by invoking preOrder() method.
         System.out.print("Pre-order: ");
@@ -81,8 +104,8 @@ public class Assignment3 {
         input.close();
     }
     
-    public static int getHeight(int arrLen){
-        
+    public static int getHeight(int arrLen, int[] tree){
+        boolean lastrowzero = true;
         int height = 0, count = arrLen;
         
         //Going thru & count (int height) every row in the tree by dividing the no. of elements by 2 until it reaches 0(index for root).
@@ -90,6 +113,16 @@ public class Assignment3 {
             count /= 2;
             height++;
         }
+        for(int j = (int) (Math.pow(2, height) - 1); j < arrLen; j++){
+            if(tree[j]!=0){
+                lastrowzero = false;
+            }
+        }
+        
+        if(lastrowzero){
+            height--;
+        }
+        
         return height;
     }
     
@@ -160,7 +193,10 @@ public class Assignment3 {
         //Check if there is any leaves that is not in the last element
         for(int j = lastRow - 1; j >= 0; j--){
             //Skip iteration IF arrayElementOutOfBound
-            if(2*j + 1 >= arrLen && 2*j + 2 >= arrLen)
+            if(2*j + 1 >= arrLen && 2*j + 2 >= arrLen && tree[j] != 0){
+                leaves++;
+                continue;
+            } else if(tree[j] == 0)
                 continue;
             //ELSE count all leaves that have null branch to its left & right.
             else if(tree[2*j + 1] == 0 && tree[2*j + 2] == 0)
@@ -168,4 +204,41 @@ public class Assignment3 {
         }
         return leaves;
         }
+       public static boolean isFullTree(int[] tree){
+        boolean fullTree = false;
+           for(int i = 0; i < tree.length/2 - 1; i++){
+               if((tree[2 * i + 1] != 0 && tree[2 * i + 2] != 0) || (tree[2 * i + 1] == 0 && tree[2 * i + 2] == 0)){
+                   fullTree = true;
+               }
+               else{
+                    fullTree = false;
+                    break;
+               }
+               }
+               if(tree.length % 2 == 0)
+                fullTree = false;
+
+               return fullTree;
+           }
+       public static boolean isCompleteTree (int[] tree){
+        boolean completeTree = false;
+           int row = getHeight(tree.length, tree);
+           for(int i = 1; i <= (int) (Math.pow(2, row) - 2); i++){
+               if(tree[i] == 0){
+                  completeTree = false;  
+                  break;}
+                else {
+                    for(int j = (int) (Math.pow(2, row) - 1); j < tree.length - 1; j++){
+                        if(tree[j] != 0 && tree[j + 1] == 0){
+                            completeTree = false;
+                            break;
+                        }
+                        else
+                            completeTree = true;
+
+                        }
+                    }    
+           }
+           return completeTree;
+    }
 }
